@@ -13,6 +13,31 @@ module.exports = function(grunt) {
 
   var _ = grunt.util._;
 
+  function addNewLines(str) {
+      var result = '';
+      var resultArr = [];
+      var counter = 0;
+
+      while (str.length > 0) {
+       var i = counter++;
+
+        // Add 200 chars to results array
+       resultArr.push(str.substring(0,200));
+
+
+       if(resultArr[i].lastIndexOf('>') != -1){
+        // Search the 200 chars for the last ">" and add new line 
+        resultArr[i] = resultArr[i].replace(/(>)([^>]*$)/, '$1\n$2');
+       }
+
+       // Remove 200 chars from original string 
+       str = str.substring(200);
+      }
+
+      result = resultArr.splice(',').join('');
+      return result;
+     }
+
   grunt.registerMultiTask('htmlcompressor', 'Compress html files', function() {
     var options = this.options();
 
